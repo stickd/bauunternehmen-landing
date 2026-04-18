@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -11,17 +10,32 @@ const navLinks = [
   { href: "#kontakt", label: "Kontakt" },
 ];
 
+const getScrollOffset = (id: string) => {
+  const isMobile = window.innerWidth < 768;
+
+  if (id === "#ueber-uns") {
+    return isMobile ? 130 : 105;
+  }
+
+  return isMobile ? 90 : 70;
+};
+
 const scrollToSection = (id: string) => {
   const element = document.querySelector(id);
   if (!element) return;
 
-  const isMobile = window.innerWidth < 768;
-  const offset = isMobile ? 90 : 70;
-
+  const offset = getScrollOffset(id);
   const y = element.getBoundingClientRect().top + window.scrollY - offset;
 
   window.scrollTo({
     top: y,
+    behavior: "smooth",
+  });
+};
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
     behavior: "smooth",
   });
 };
@@ -77,12 +91,16 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <Link
-          href="/"
+        <button
+          type="button"
+          onClick={() => {
+            scrollToTop();
+            setIsOpen(false);
+          }}
           className="text-xl font-bold tracking-tight text-neutral-900 transition-opacity duration-200 hover:opacity-80"
         >
           Bau<span className="text-neutral-500">Firma</span>
-        </Link>
+        </button>
 
         <nav className="hidden items-center gap-2 md:flex">
           {navLinks.map((link) => {
