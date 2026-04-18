@@ -59,24 +59,33 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScrollSpy = () => {
-      const sections = navLinks
-        .map((link) => document.querySelector(link.href))
-        .filter(Boolean) as HTMLElement[];
-
       const isMobile = window.innerWidth < 768;
-      const scrollPosition = window.scrollY + (isMobile ? 140 : 100);
 
-      for (const section of sections) {
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
+      let currentSection = "";
+      let smallestDistance = Number.POSITIVE_INFINITY;
 
-        if (scrollPosition >= top && scrollPosition < top + height) {
-          setActiveSection(`#${section.id}`);
-          return;
+      for (const link of navLinks) {
+        const section = document.querySelector(link.href) as HTMLElement | null;
+        if (!section) continue;
+
+        const rect = section.getBoundingClientRect();
+        const offset = getScrollOffset(link.href);
+
+        // 1. Секция активна, если линия offset находится внутри неё
+        if (rect.top <= offset && rect.bottom > offset) {
+          currentSection = link.href;
+          break;
+        }
+
+        // 2. fallback: если ни одна секция не пересекла линию
+        const distance = Math.abs(rect.top - offset);
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          currentSection = link.href;
         }
       }
 
-      setActiveSection("");
+      setActiveSection(currentSection);
     };
 
     handleScrollSpy();
