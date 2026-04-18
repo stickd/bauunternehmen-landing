@@ -13,22 +13,35 @@ const navLinks = [
 const getScrollOffset = (id: string) => {
   const isMobile = window.innerWidth < 768;
 
-  if (id === "#ueber-uns") {
-    return isMobile ? 130 : 105;
+  if (!isMobile) {
+    const desktopOffsets: Record<string, number> = {
+      "#leistungen": 70,
+      "#ueber-uns": 110,
+      "#projekte": 40,
+      "#kontakt": 70,
+    };
+
+    return desktopOffsets[id] ?? 70;
   }
 
-  return isMobile ? 90 : 70;
+  const mobileOffsets: Record<string, number> = {
+    "#leistungen": -30,
+    "#ueber-uns": 10,
+    "#projekte": -110,
+    "#kontakt": -40,
+  };
+
+  return mobileOffsets[id] ?? 140;
 };
 
 const scrollToSection = (id: string) => {
-  const element = document.querySelector(id);
+  const element = document.querySelector(id) as HTMLElement | null;
   if (!element) return;
 
   const offset = getScrollOffset(id);
-  const y = element.getBoundingClientRect().top + window.scrollY - offset;
 
   window.scrollTo({
-    top: y,
+    top: element.offsetTop - offset,
     behavior: "smooth",
   });
 };

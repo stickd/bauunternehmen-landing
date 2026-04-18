@@ -10,25 +10,25 @@ export default function HomePage() {
       <Hero />
 
       <section className="py-20 md:py-28">
-        <div id="leistungen" className="scroll-mt-24">
+        <div id="leistungen" className="">
           <Services />
         </div>
       </section>
 
       <section className="py-20 md:py-28">
-        <div id="ueber-uns" className="scroll-mt-30">
+        <div id="ueber-uns" className="">
           <About />
         </div>
       </section>
 
       <section className="py-20 md:py-28">
-        <div id="projekte" className="scroll-mt-24">
+        <div id="projekte" className="">
           <ProjectsGallery />
         </div>
       </section>
 
       <section className="py-20 md:py-28">
-        <div id="kontakt" className="scroll-mt-24">
+        <div id="kontakt" className="">
           <Contact />
         </div>
       </section>
