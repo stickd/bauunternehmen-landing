@@ -11,6 +11,21 @@ const navLinks = [
   { href: "#kontakt", label: "Kontakt" },
 ];
 
+const scrollToSection = (id: string) => {
+  const element = document.querySelector(id);
+  if (!element) return;
+
+  const isMobile = window.innerWidth < 768;
+  const offset = isMobile ? 90 : 70;
+
+  const y = element.getBoundingClientRect().top + window.scrollY - offset;
+
+  window.scrollTo({
+    top: y,
+    behavior: "smooth",
+  });
+};
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -21,7 +36,8 @@ export function Navbar() {
         .map((link) => document.querySelector(link.href))
         .filter(Boolean) as HTMLElement[];
 
-      const scrollPosition = window.scrollY + 120;
+      const isMobile = window.innerWidth < 768;
+      const scrollPosition = window.scrollY + (isMobile ? 140 : 100);
 
       for (const section of sections) {
         const top = section.offsetTop;
@@ -38,8 +54,12 @@ export function Navbar() {
 
     handleScrollSpy();
     window.addEventListener("scroll", handleScrollSpy);
+    window.addEventListener("resize", handleScrollSpy);
 
-    return () => window.removeEventListener("scroll", handleScrollSpy);
+    return () => {
+      window.removeEventListener("scroll", handleScrollSpy);
+      window.removeEventListener("resize", handleScrollSpy);
+    };
   }, []);
 
   useEffect(() => {
@@ -69,10 +89,11 @@ export function Navbar() {
             const isActive = activeSection === link.href;
 
             return (
-              <Link
+              <button
                 key={link.href}
-                href={link.href}
-                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                type="button"
+                onClick={() => scrollToSection(link.href)}
+                className={`relative z-0 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   isActive
                     ? "text-neutral-900"
                     : "text-neutral-600 hover:text-neutral-900"
@@ -83,22 +104,23 @@ export function Navbar() {
                 {isActive && (
                   <motion.span
                     layoutId="active-pill"
-                    className="absolute inset-0 rounded-full bg-neutral-100"
+                    className="pointer-events-none absolute inset-0 rounded-full bg-neutral-100"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
-              </Link>
+              </button>
             );
           })}
         </nav>
 
         <div className="hidden md:block">
-          <Link
-            href="#kontakt"
+          <button
+            type="button"
+            onClick={() => scrollToSection("#kontakt")}
             className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-md"
           >
             Angebot anfragen
-          </Link>
+          </button>
         </div>
 
         <button
@@ -131,7 +153,6 @@ export function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* ✅ FIX: overlay начинается ПОД navbar */}
             <motion.div
               className="fixed left-0 right-0 bottom-0 top-16 z-40 bg-black/20 md:hidden"
               initial={{ opacity: 0 }}
@@ -160,20 +181,23 @@ export function Navbar() {
                       exit={{ opacity: 0, y: -8 }}
                       transition={{ delay: index * 0.05 }}
                     >
-                      <Link
-                        href={link.href}
-                        className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300 ${
+                      <button
+                        type="button"
+                        onClick={() => {
+                          scrollToSection(link.href);
+                          setIsOpen(false);
+                        }}
+                        className={`flex w-full items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300 ${
                           isActive
                             ? "bg-neutral-100 text-neutral-900"
                             : "text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900"
                         }`}
-                        onClick={() => setIsOpen(false)}
                       >
                         {link.label}
                         {isActive && (
                           <span className="h-2 w-2 rounded-full bg-neutral-900" />
                         )}
-                      </Link>
+                      </button>
                     </motion.div>
                   );
                 })}
@@ -184,13 +208,16 @@ export function Navbar() {
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <Link
-                    href="#kontakt"
-                    className="mt-4 inline-flex items-center justify-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-black"
-                    onClick={() => setIsOpen(false)}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      scrollToSection("#kontakt");
+                      setIsOpen(false);
+                    }}
+                    className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-black"
                   >
                     Angebot anfragen
-                  </Link>
+                  </button>
                 </motion.div>
               </nav>
             </motion.div>
