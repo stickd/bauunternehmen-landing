@@ -6,31 +6,35 @@ import Contact from "@/components/sections/Contact";
 
 export default function HomePage() {
   return (
-    <main className="mx-auto max-w-6xl px-6">
+    <main id="top" className="mx-auto max-w-6xl px-6">
       <Hero />
 
-      <section className="py-20 md:py-28">
-        <div id="leistungen" className="">
-          <Services />
-        </div>
+      <section
+        id="leistungen"
+        className="scroll-mt-16 py-20 md:scroll-mt-20 md:py-28"
+      >
+        <Services />
       </section>
 
-      <section className="py-20 md:py-28">
-        <div id="ueber-uns" className="">
-          <About />
-        </div>
+      <section
+        id="ueber-uns"
+        className="scroll-mt-16 py-20 md:scroll-mt-20 md:py-28"
+      >
+        <About />
       </section>
 
-      <section className="py-20 md:py-28">
-        <div id="projekte" className="">
-          <ProjectsGallery />
-        </div>
+      <section
+        id="projekte"
+        className="scroll-mt-16 py-20 md:scroll-mt-20 md:py-28"
+      >
+        <ProjectsGallery />
       </section>
 
-      <section className="py-20 md:py-28">
-        <div id="kontakt" className="">
-          <Contact />
-        </div>
+      <section
+        id="kontakt"
+        className="scroll-mt-16 py-20 md:scroll-mt-20 md:py-28"
+      >
+        <Contact />
       </section>
     </main>
   );

@@ -10,78 +10,24 @@ const navLinks = [
   { href: "#kontakt", label: "Kontakt" },
 ];
 
-const getScrollOffset = (id: string) => {
-  const isMobile = window.innerWidth < 768;
-
-  if (!isMobile) {
-    const desktopOffsets: Record<string, number> = {
-      "#leistungen": 70,
-      "#ueber-uns": 110,
-      "#projekte": 40,
-      "#kontakt": 70,
-    };
-
-    return desktopOffsets[id] ?? 70;
-  }
-
-  const mobileOffsets: Record<string, number> = {
-    "#leistungen": -30,
-    "#ueber-uns": 10,
-    "#projekte": -110,
-    "#kontakt": -40,
-  };
-
-  return mobileOffsets[id] ?? 140;
-};
-
-const scrollToSection = (id: string) => {
-  const element = document.querySelector(id) as HTMLElement | null;
-  if (!element) return;
-
-  const offset = getScrollOffset(id);
-
-  window.scrollTo({
-    top: element.offsetTop - offset,
-    behavior: "smooth",
-  });
-};
-
-const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
-};
-
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScrollSpy = () => {
-      const isMobile = window.innerWidth < 768;
-
+      const activationLine = 120;
       let currentSection = "";
-      let smallestDistance = Number.POSITIVE_INFINITY;
 
       for (const link of navLinks) {
         const section = document.querySelector(link.href) as HTMLElement | null;
         if (!section) continue;
 
         const rect = section.getBoundingClientRect();
-        const offset = getScrollOffset(link.href);
 
-        // 1. Секция активна, если линия offset находится внутри неё
-        if (rect.top <= offset && rect.bottom > offset) {
+        if (rect.top <= activationLine && rect.bottom > activationLine) {
           currentSection = link.href;
           break;
-        }
-
-        // 2. fallback: если ни одна секция не пересекла линию
-        const distance = Math.abs(rect.top - offset);
-        if (distance < smallestDistance) {
-          smallestDistance = distance;
-          currentSection = link.href;
         }
       }
 
@@ -99,11 +45,7 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isOpen ? "hidden" : "";
 
     return () => {
       document.body.style.overflow = "";
@@ -113,27 +55,23 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <button
-          type="button"
-          onClick={() => {
-            scrollToTop();
-            setIsOpen(false);
-          }}
+        <a
+          href="#top"
+          onClick={() => setIsOpen(false)}
           className="text-xl font-bold tracking-tight text-neutral-900 transition-opacity duration-200 hover:opacity-80"
         >
           Bau<span className="text-neutral-500">Firma</span>
-        </button>
+        </a>
 
         <nav className="hidden items-center gap-2 md:flex">
           {navLinks.map((link) => {
             const isActive = activeSection === link.href;
 
             return (
-              <button
+              <a
                 key={link.href}
-                type="button"
-                onClick={() => scrollToSection(link.href)}
-                className={`relative z-0 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                href={link.href}
+                className={`relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   isActive
                     ? "text-neutral-900"
                     : "text-neutral-600 hover:text-neutral-900"
@@ -148,19 +86,18 @@ export function Navbar() {
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
-              </button>
+              </a>
             );
           })}
         </nav>
 
         <div className="hidden md:block">
-          <button
-            type="button"
-            onClick={() => scrollToSection("#kontakt")}
+          <a
+            href="#kontakt"
             className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-md"
           >
             Angebot anfragen
-          </button>
+          </a>
         </div>
 
         <button
@@ -221,13 +158,10 @@ export function Navbar() {
                       exit={{ opacity: 0, y: -8 }}
                       transition={{ delay: index * 0.05 }}
                     >
-                      <button
-                        type="button"
-                        onClick={() => {
-                          scrollToSection(link.href);
-                          setIsOpen(false);
-                        }}
-                        className={`flex w-full items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300 ${
+                      <a
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300 ${
                           isActive
                             ? "bg-neutral-100 text-neutral-900"
                             : "text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900"
@@ -237,7 +171,7 @@ export function Navbar() {
                         {isActive && (
                           <span className="h-2 w-2 rounded-full bg-neutral-900" />
                         )}
-                      </button>
+                      </a>
                     </motion.div>
                   );
                 })}
@@ -248,16 +182,13 @@ export function Navbar() {
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => {
-                      scrollToSection("#kontakt");
-                      setIsOpen(false);
-                    }}
+                  <a
+                    href="#kontakt"
+                    onClick={() => setIsOpen(false)}
                     className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-black"
                   >
                     Angebot anfragen
-                  </button>
+                  </a>
                 </motion.div>
               </nav>
             </motion.div>

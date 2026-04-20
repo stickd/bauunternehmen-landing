@@ -166,3 +166,6 @@ p {
   line-height: 1.7;
   color: var(--muted-foreground);
 }
+html {
+  scroll-behavior: smooth;
+}
