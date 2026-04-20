@@ -14,9 +14,45 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
+  const scrollToTarget = (href: string) => {
+    const id = href.replace("#", "");
+    const target = document.getElementById(id);
+
+    if (!target) return;
+
+    const navbarOffset = -40;
+    const targetTop =
+      target.getBoundingClientRect().top + window.scrollY - navbarOffset;
+
+    window.scrollTo({
+      top: targetTop,
+      behavior: "smooth",
+    });
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault();
+    scrollToTarget(href);
+    setIsOpen(false);
+  };
+
+  const handleTopClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     const handleScrollSpy = () => {
-      const activationLine = 120;
+      const activationLine = 140;
       let currentSection = "";
 
       for (const link of navLinks) {
@@ -57,7 +93,7 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <a
           href="#top"
-          onClick={() => setIsOpen(false)}
+          onClick={handleTopClick}
           className="text-xl font-bold tracking-tight text-neutral-900 transition-opacity duration-200 hover:opacity-80"
         >
           Bau<span className="text-neutral-500">Firma</span>
@@ -71,6 +107,7 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className={`relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   isActive
                     ? "text-neutral-900"
@@ -94,6 +131,7 @@ export function Navbar() {
         <div className="hidden md:block">
           <a
             href="#kontakt"
+            onClick={(e) => handleNavClick(e, "#kontakt")}
             className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-md"
           >
             Angebot anfragen
@@ -160,7 +198,7 @@ export function Navbar() {
                     >
                       <a
                         href={link.href}
-                        onClick={() => setIsOpen(false)}
+                        onClick={(e) => handleNavClick(e, link.href)}
                         className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300 ${
                           isActive
                             ? "bg-neutral-100 text-neutral-900"
@@ -184,7 +222,7 @@ export function Navbar() {
                 >
                   <a
                     href="#kontakt"
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => handleNavClick(e, "#kontakt")}
                     className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-black"
                   >
                     Angebot anfragen
