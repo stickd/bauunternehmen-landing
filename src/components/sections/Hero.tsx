@@ -1,3 +1,7 @@
+"use client";
+
+import { scrollToSection } from "@/lib/scroll";
+
 export default function Hero() {
   return (
     <section id="hero" className="scroll-mt-16 md:scroll-mt-20">
@@ -18,6 +22,13 @@ export default function Hero() {
 
           <a
             href="#kontakt"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("kontakt", {
+                mobileOffset: 24,
+                desktopOffset: 65,
+              });
+            }}
             className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
           >
             Kostenloses Angebot anfordern
