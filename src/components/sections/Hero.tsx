@@ -16,7 +16,7 @@ export default function Hero() {
         </p>
 
         <a
-          href="#contact"
+          href="#kontakt"
           className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
         >
           Kostenloses Angebot anfordern

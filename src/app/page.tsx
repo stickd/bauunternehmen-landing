@@ -29,10 +29,9 @@ export default function HomePage() {
       >
         <ProjectsGallery />
       </section>
-
       <section
         id="kontakt"
-        className="scroll-mt-16 py-20 md:scroll-mt-20 md:py-28"
+        className="scroll-mt-[-28px] py-20 md:scroll-mt-[-32px] md:py-28"
       >
         <Contact />
       </section>
