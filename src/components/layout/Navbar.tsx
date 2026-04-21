@@ -91,14 +91,14 @@ export function Navbar() {
   }, [isOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0B1220]/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <a
           href="#top"
           onClick={handleTopClick}
-          className="text-xl font-bold tracking-tight text-neutral-900 transition-opacity duration-200 hover:opacity-80"
+          className="text-xl font-bold tracking-tight text-slate-200 transition-opacity duration-200 hover:opacity-85"
         >
-          Bau<span className="text-neutral-500">Firma</span>
+          Bau<span className="text-orange-400">Firma</span>
         </a>
 
         <nav className="hidden items-center gap-2 md:flex">
@@ -112,8 +112,8 @@ export function Navbar() {
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={`relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ${
                   isActive
-                    ? "text-neutral-900"
-                    : "text-neutral-600 hover:text-neutral-900"
+                    ? "text-slate-200"
+                    : "text-slate-300 hover:text-slate-200"
                 }`}
               >
                 <span className="relative z-10">{link.label}</span>
@@ -121,7 +121,7 @@ export function Navbar() {
                 {isActive && (
                   <motion.span
                     layoutId="active-pill"
-                    className="pointer-events-none absolute inset-0 rounded-full bg-neutral-100"
+                    className="pointer-events-none absolute inset-0 rounded-full border border-white/10 bg-white/[0.05]"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -134,16 +134,21 @@ export function Navbar() {
           <a
             href="#kontakt"
             onClick={(e) => handleNavClick(e, "#kontakt")}
-            className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold !text-white [&_*]:!text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:!text-white hover:shadow-md"
+            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full border border-orange-300/20 bg-gradient-to-b from-[#FB923C] to-[#EA580C] px-5 py-2.5 text-sm font-semibold !text-white shadow-[0_10px_30px_rgba(249,115,22,0.22)] transition-all duration-300 ease-out hover:-translate-y-[1px] hover:shadow-[0_20px_45px_rgba(249,115,22,0.35)] active:translate-y-[1px] active:scale-[0.985]"
           >
-            Angebot anfragen
+            <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.2)_45%,transparent_70%)] translate-x-[-120%] transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
+            <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-80" />
+            <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
+            <span className="relative z-10 !text-white tracking-[0.02em]">
+              Angebot anfragen
+            </span>
           </a>
         </div>
 
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-neutral-300 bg-white transition-all duration-300 hover:border-neutral-400 hover:bg-neutral-50 md:hidden"
+          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-slate-200 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white md:hidden"
           aria-label="Toggle menu"
           aria-expanded={isOpen}
         >
@@ -151,17 +156,17 @@ export function Navbar() {
             <motion.span
               animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.25 }}
-              className="absolute left-0 top-0 block h-0.5 w-5 origin-center rounded bg-black"
+              className="absolute left-0 top-0 block h-0.5 w-5 origin-center rounded bg-current"
             />
             <motion.span
               animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
               transition={{ duration: 0.2 }}
-              className="absolute left-0 top-2 block h-0.5 w-5 rounded bg-black"
+              className="absolute left-0 top-2 block h-0.5 w-5 rounded bg-current"
             />
             <motion.span
               animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.25 }}
-              className="absolute left-0 top-4 block h-0.5 w-5 origin-center rounded bg-black"
+              className="absolute left-0 top-4 block h-0.5 w-5 origin-center rounded bg-current"
             />
           </span>
         </button>
@@ -171,7 +176,7 @@ export function Navbar() {
         {isOpen && (
           <>
             <motion.div
-              className="fixed bottom-0 left-0 right-0 top-16 z-40 bg-black/20 md:hidden"
+              className="fixed bottom-0 left-0 right-0 top-16 z-40 bg-[#020617]/55 backdrop-blur-[2px] md:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -180,7 +185,7 @@ export function Navbar() {
             />
 
             <motion.div
-              className="absolute left-0 right-0 z-50 border-t border-neutral-200 bg-white shadow-lg md:hidden"
+              className="absolute left-0 right-0 z-50 border-t border-white/10 bg-[#0B1220]/95 shadow-[0_20px_60px_rgba(2,6,23,0.45)] backdrop-blur-xl md:hidden"
               initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
@@ -201,15 +206,15 @@ export function Navbar() {
                       <a
                         href={link.href}
                         onClick={(e) => handleNavClick(e, link.href)}
-                        className={`flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300 ${
+                        className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-medium transition-all duration-300 ${
                           isActive
-                            ? "bg-neutral-100 text-neutral-900"
-                            : "text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900"
+                            ? "border-white/10 bg-white/[0.05] text-slate-200"
+                            : "border-transparent text-slate-300 hover:border-white/10 hover:bg-white/[0.05] hover:text-slate-200"
                         }`}
                       >
                         {link.label}
                         {isActive && (
-                          <span className="h-2 w-2 rounded-full bg-neutral-900" />
+                          <span className="h-2 w-2 rounded-full bg-orange-400" />
                         )}
                       </a>
                     </motion.div>
@@ -225,9 +230,14 @@ export function Navbar() {
                   <a
                     href="#kontakt"
                     onClick={(e) => handleNavClick(e, "#kontakt")}
-                    className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold !text-white [&_*]:!text-white shadow-sm transition-all duration-300 hover:bg-black hover:!text-white"
+                    className="group relative mt-4 inline-flex w-full items-center justify-center overflow-hidden rounded-full border border-orange-300/20 bg-gradient-to-b from-[#FB923C] to-[#EA580C] px-5 py-3 text-sm font-semibold !text-white shadow-[0_10px_30px_rgba(249,115,22,0.22)] transition-all duration-300 ease-out hover:-translate-y-[1px] hover:shadow-[0_20px_45px_rgba(249,115,22,0.35)] active:translate-y-[1px] active:scale-[0.985]"
                   >
-                    Angebot anfragen
+                    <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.2)_45%,transparent_70%)] translate-x-[-120%] transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
+                    <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-80" />
+                    <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
+                    <span className="relative z-10 !text-white tracking-[0.02em]">
+                      Angebot anfragen
+                    </span>
                   </a>
                 </motion.div>
               </nav>

@@ -102,19 +102,27 @@ export default function Contact() {
   return (
     <section
       id="kontakt"
-      className="scroll-mt-32 bg-neutral-50 py-20 md:scroll-mt-36 md:py-28"
+      className="relative scroll-mt-32 overflow-hidden bg-[#0B1220] py-20 md:scroll-mt-36 md:py-28"
     >
-      <div className="mx-auto max-w-6xl px-6">
+      {/* background */}
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#0B1220_0%,#0F172A_55%,#111827_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.05]" />
+      <div className="absolute -left-16 top-16 h-[240px] w-[240px] rounded-full bg-blue-500/10 blur-3xl" />
+      <div className="absolute right-0 bottom-12 h-[260px] w-[260px] rounded-full bg-orange-500/10 blur-3xl" />
+
+      <div className="relative mx-auto max-w-6xl px-6">
         <div className="mb-16 max-w-2xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-orange-600">
+          <p className="mb-4 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
+            <span className="h-px w-8 bg-orange-400/70" />
             Kontakt
           </p>
 
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
-            Lassen Sie uns über Ihr Bauprojekt sprechen
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <span className="text-slate-300">Lassen Sie uns über Ihr</span>{" "}
+            <span className="text-orange-400">Bauprojekt sprechen</span>
           </h2>
 
-          <p className="mt-4 text-base leading-7 text-neutral-600">
+          <p className="mt-4 text-base leading-8 text-slate-300">
             Haben Sie ein Bauprojekt geplant oder Fragen zu unseren Leistungen?
             Schreiben Sie uns einfach – wir melden uns schnellstmöglich bei
             Ihnen.
@@ -123,38 +131,32 @@ export default function Contact() {
 
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
           <div className="space-y-6">
-            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-neutral-900">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.06]">
+              <h3 className="text-xl font-semibold text-slate-100">
                 Kontaktinformationen
               </h3>
 
-              <div className="mt-6 space-y-4 text-sm leading-6 text-neutral-600">
+              <div className="mt-6 space-y-4 text-sm leading-7 text-slate-300">
                 <p>
-                  <span className="font-semibold text-neutral-900">
-                    Telefon:
-                  </span>{" "}
+                  <span className="font-semibold text-slate-100">Telefon:</span>{" "}
                   +49 123 456789
                 </p>
                 <p>
-                  <span className="font-semibold text-neutral-900">
-                    E-Mail:
-                  </span>{" "}
+                  <span className="font-semibold text-slate-100">E-Mail:</span>{" "}
                   info@bauunternehmen.de
                 </p>
                 <p>
-                  <span className="font-semibold text-neutral-900">
-                    Adresse:
-                  </span>{" "}
+                  <span className="font-semibold text-slate-100">Adresse:</span>{" "}
                   Musterstraße 12, 12345 Musterstadt
                 </p>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <h3 className="text-xl font-semibold text-neutral-900">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.06]">
+              <h3 className="text-xl font-semibold text-slate-100">
                 Persönliche Beratung
               </h3>
-              <p className="mt-3 text-sm leading-6 text-neutral-600">
+              <p className="mt-3 text-sm leading-7 text-slate-300">
                 Ob Neubau, Sanierung oder Innenausbau – wir beraten Sie
                 individuell und finden gemeinsam die passende Lösung für Ihr
                 Projekt.
@@ -164,13 +166,13 @@ export default function Contact() {
 
           <form
             onSubmit={handleSubmit}
-            className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm md:p-8"
+            className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05] md:p-8"
           >
             <div className="space-y-5">
               <div>
                 <label
                   htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-neutral-900"
+                  className="mb-2 block text-sm font-medium text-slate-200"
                 >
                   Name
                 </label>
@@ -179,18 +181,18 @@ export default function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-neutral-300 px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                  className="w-full rounded-2xl border border-white/10 bg-[#0F172A]/70 px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-orange-400/60 focus:bg-[#0F172A] focus:ring-2 focus:ring-orange-400/10"
                   placeholder="Ihr Name"
                 />
                 {errors.name && (
-                  <p className="mt-2 text-sm text-red-500">{errors.name}</p>
+                  <p className="mt-2 text-sm text-red-400">{errors.name}</p>
                 )}
               </div>
 
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-2 block text-sm font-medium text-neutral-900"
+                  className="mb-2 block text-sm font-medium text-slate-200"
                 >
                   E-Mail
                 </label>
@@ -199,18 +201,18 @@ export default function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-neutral-300 px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                  className="w-full rounded-2xl border border-white/10 bg-[#0F172A]/70 px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-orange-400/60 focus:bg-[#0F172A] focus:ring-2 focus:ring-orange-400/10"
                   placeholder="ihre@email.de"
                 />
                 {errors.email && (
-                  <p className="mt-2 text-sm text-red-500">{errors.email}</p>
+                  <p className="mt-2 text-sm text-red-400">{errors.email}</p>
                 )}
               </div>
 
               <div>
                 <label
                   htmlFor="message"
-                  className="mb-2 block text-sm font-medium text-neutral-900"
+                  className="mb-2 block text-sm font-medium text-slate-200"
                 >
                   Nachricht
                 </label>
@@ -220,25 +222,29 @@ export default function Contact() {
                   value={formData.message}
                   onChange={handleChange}
                   rows={6}
-                  className="w-full rounded-xl border border-neutral-300 px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                  className="w-full rounded-2xl border border-white/10 bg-[#0F172A]/70 px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-orange-400/60 focus:bg-[#0F172A] focus:ring-2 focus:ring-orange-400/10"
                   placeholder="Ihre Nachricht"
                 />
                 {errors.message && (
-                  <p className="mt-2 text-sm text-red-500">{errors.message}</p>
+                  <p className="mt-2 text-sm text-red-400">{errors.message}</p>
                 )}
               </div>
 
-              <div className="flex flex-col items-start gap-3">
+              <div className="flex flex-col items-start gap-3 pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="group relative inline-flex items-center justify-center overflow-hidden rounded-full border border-orange-300/20 bg-gradient-to-b from-[#FB923C] to-[#EA580C] px-6 py-3 text-sm font-semibold text-white transition-[box-shadow,transform] duration-300 ease-out hover:shadow-[0_16px_36px_rgba(249,115,22,0.28)] active:scale-[0.985] disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
+                  <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.16)_45%,transparent_70%)] translate-x-[-120%] transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
+                  <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
+                  <span className="relative z-10">
+                    {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
+                  </span>
                 </button>
 
                 {successMessage && (
-                  <p className="text-sm font-medium text-green-600">
+                  <p className="text-sm font-medium text-emerald-400">
                     {successMessage}
                   </p>
                 )}

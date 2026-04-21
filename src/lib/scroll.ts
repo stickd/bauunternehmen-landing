@@ -28,6 +28,11 @@ export function scrollToSection(
     offset = isMobile ? DEFAULT_OFFSETS.mobile : DEFAULT_OFFSETS.desktop;
   }
 
+  // 🔥 СДВИГАЕМ СЕКЦИЮ НИЖЕ НА ДЕСКТОПЕ
+  if (!isMobile && id === "projekte") {
+    offset -= 40; // можешь менять 80–140 под себя
+  }
+
   const top = element.getBoundingClientRect().top + window.scrollY - offset;
 
   window.scrollTo({
