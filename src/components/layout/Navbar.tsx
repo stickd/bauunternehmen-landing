@@ -20,14 +20,36 @@ export function Navbar() {
     href: string,
   ) => {
     e.preventDefault();
-    scrollToSection(href.replace("#", ""));
-    setIsOpen(false);
+
+    const id = href.replace("#", "");
+
+    if (isOpen) {
+      setIsOpen(false);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scrollToSection(id);
+        });
+      });
+    } else {
+      scrollToSection(id);
+    }
   };
 
   const handleTopClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    scrollToTop();
-    setIsOpen(false);
+
+    if (isOpen) {
+      setIsOpen(false);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scrollToTop();
+        });
+      });
+    } else {
+      scrollToTop();
+    }
   };
 
   useEffect(() => {
