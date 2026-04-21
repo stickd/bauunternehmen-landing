@@ -8,11 +8,11 @@ export default function About() {
   return (
     <section
       id="ueber-uns"
-      className="scroll-mt-32 py-20 md:scroll-mt-36 md:py-28"
+      className="scroll-mt-32 flex min-h-[calc(100vh-80px)] items-center py-20 md:scroll-mt-36 md:py-28"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto w-full max-w-6xl px-6">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          {/* LEFT CONTENT */}
+          {/* LEFT */}
           <div>
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-orange-600">
               Über uns
@@ -36,8 +36,8 @@ export default function About() {
             </p>
           </div>
 
-          {/* STATS */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {/* RIGHT (STATS) */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
             {stats.map((stat) => (
               <div
                 key={stat.label}
@@ -46,7 +46,9 @@ export default function About() {
                 <p className="text-3xl font-bold text-orange-600">
                   {stat.value}
                 </p>
-                <p className="mt-2 text-sm text-neutral-600">{stat.label}</p>
+                <p className="mt-2 text-sm leading-6 text-neutral-600">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>

@@ -79,7 +79,6 @@ export default function Contact() {
     try {
       setIsSubmitting(true);
 
-      // mock submit
       console.log("Form submitted:", formData);
 
       await new Promise((resolve) => setTimeout(resolve, 800));
@@ -87,6 +86,7 @@ export default function Contact() {
       setSuccessMessage(
         "Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.",
       );
+
       setFormData({
         name: "",
         email: "",
@@ -100,79 +100,150 @@ export default function Contact() {
   };
 
   return (
-    <section className="scroll-mt-32 py-16 px-4">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4">Kontakt</h2>
-        <p className="text-gray-600 mb-10">
-          Haben Sie ein Bauprojekt geplant oder Fragen zu unseren Leistungen?
-          Schreiben Sie uns einfach.
-        </p>
+    <section
+      id="kontakt"
+      className="scroll-mt-32 bg-neutral-50 py-20 md:scroll-mt-36 md:py-28"
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mb-16 max-w-2xl">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-orange-600">
+            Kontakt
+          </p>
 
-        <div className="grid md:grid-cols-2 gap-10">
-          {/* LEFT */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold">Kontaktinformationen</h3>
-            <p>Telefon: +49 123 456789</p>
-            <p>E-Mail: info@bauunternehmen.de</p>
-            <p>Adresse: Musterstraße 12, 12345 Musterstadt</p>
+          <h2 className="text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
+            Lassen Sie uns über Ihr Bauprojekt sprechen
+          </h2>
+
+          <p className="mt-4 text-base leading-7 text-neutral-600">
+            Haben Sie ein Bauprojekt geplant oder Fragen zu unseren Leistungen?
+            Schreiben Sie uns einfach – wir melden uns schnellstmöglich bei
+            Ihnen.
+          </p>
+        </div>
+
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+          <div className="space-y-6">
+            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">
+                Kontaktinformationen
+              </h3>
+
+              <div className="mt-6 space-y-4 text-sm leading-6 text-neutral-600">
+                <p>
+                  <span className="font-semibold text-neutral-900">
+                    Telefon:
+                  </span>{" "}
+                  +49 123 456789
+                </p>
+                <p>
+                  <span className="font-semibold text-neutral-900">
+                    E-Mail:
+                  </span>{" "}
+                  info@bauunternehmen.de
+                </p>
+                <p>
+                  <span className="font-semibold text-neutral-900">
+                    Adresse:
+                  </span>{" "}
+                  Musterstraße 12, 12345 Musterstadt
+                </p>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+              <h3 className="text-xl font-semibold text-neutral-900">
+                Persönliche Beratung
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-neutral-600">
+                Ob Neubau, Sanierung oder Innenausbau – wir beraten Sie
+                individuell und finden gemeinsam die passende Lösung für Ihr
+                Projekt.
+              </p>
+            </div>
           </div>
 
-          {/* RIGHT */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block mb-1">Name</label>
-              <input
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
-                placeholder="Ihr Name"
-              />
-              {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name}</p>
-              )}
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm md:p-8"
+          >
+            <div className="space-y-5">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 block text-sm font-medium text-neutral-900"
+                >
+                  Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-neutral-300 px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                  placeholder="Ihr Name"
+                />
+                {errors.name && (
+                  <p className="mt-2 text-sm text-red-500">{errors.name}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-sm font-medium text-neutral-900"
+                >
+                  E-Mail
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-neutral-300 px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                  placeholder="ihre@email.de"
+                />
+                {errors.email && (
+                  <p className="mt-2 text-sm text-red-500">{errors.email}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="mb-2 block text-sm font-medium text-neutral-900"
+                >
+                  Nachricht
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={6}
+                  className="w-full rounded-xl border border-neutral-300 px-4 py-3 text-sm text-neutral-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                  placeholder="Ihre Nachricht"
+                />
+                {errors.message && (
+                  <p className="mt-2 text-sm text-red-500">{errors.message}</p>
+                )}
+              </div>
+
+              <div className="flex flex-col items-start gap-3">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
+                </button>
+
+                {successMessage && (
+                  <p className="text-sm font-medium text-green-600">
+                    {successMessage}
+                  </p>
+                )}
+              </div>
             </div>
-
-            <div>
-              <label className="block mb-1">E-Mail</label>
-              <input
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
-                placeholder="ihre@email.de"
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block mb-1">Nachricht</label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
-                rows={5}
-                placeholder="Ihre Nachricht"
-              />
-              {errors.message && (
-                <p className="text-red-500 text-sm">{errors.message}</p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-black text-white px-4 py-2 rounded hover:opacity-80"
-            >
-              {isSubmitting ? "Wird gesendet..." : "Nachricht senden"}
-            </button>
-
-            {successMessage && (
-              <p className="text-green-600">{successMessage}</p>
-            )}
           </form>
         </div>
       </div>

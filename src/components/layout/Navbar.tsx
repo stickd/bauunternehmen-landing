@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { scrollToSection, scrollToTop } from "@/lib/scroll";
 
 const navLinks = [
   { href: "#leistungen", label: "Leistungen" },
@@ -14,45 +15,24 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  const scrollToTarget = (href: string) => {
-    const id = href.replace("#", "");
-    const target = document.getElementById(id);
-
-    if (!target) return;
-
-    const navbarOffset = -40;
-    const targetTop =
-      target.getBoundingClientRect().top + window.scrollY - navbarOffset;
-
-    window.scrollTo({
-      top: targetTop,
-      behavior: "smooth",
-    });
-  };
-
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
     e.preventDefault();
-    scrollToTarget(href);
+    scrollToSection(href.replace("#", ""));
     setIsOpen(false);
   };
 
   const handleTopClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-
+    scrollToTop();
     setIsOpen(false);
   };
 
   useEffect(() => {
     const handleScrollSpy = () => {
-      const activationLine = 140;
+      const activationLine = window.innerWidth < 768 ? 110 : 140;
       let currentSection = "";
 
       for (const link of navLinks) {
