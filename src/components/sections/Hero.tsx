@@ -20,19 +20,35 @@ export default function Hero() {
             einem klaren Fokus auf Qualität.
           </p>
 
-          <a
-            href="#kontakt"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("kontakt", {
-                mobileOffset: 24,
-                desktopOffset: 65,
-              });
-            }}
-            className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-          >
-            Kostenloses Angebot anfordern
-          </a>
+          {/* BUTTONS */}
+          <div className="flex flex-wrap gap-4">
+            {/* PRIMARY */}
+            <a
+              href="#kontakt"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("kontakt", {
+                  mobileOffset: 24,
+                  desktopOffset: 65,
+                });
+              }}
+              className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            >
+              Kostenloses Angebot anfordern
+            </a>
+
+            {/* SECONDARY */}
+            <a
+              href="#projekte"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("projekte");
+              }}
+              className="rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100"
+            >
+              Unsere Projekte ansehen
+            </a>
+          </div>
         </div>
       </div>
     </section>
