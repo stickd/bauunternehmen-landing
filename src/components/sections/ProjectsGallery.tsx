@@ -96,34 +96,65 @@ export default function ProjectsGallery() {
             <ChevronRight className="h-7 w-7" />
           </button>
 
-          <div
-            ref={sliderRef}
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-3 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:gap-5 md:gap-6"
-          >
+          <div className="grid gap-5 md:hidden">
             {projects.map((project, index) => (
               <article
                 key={`${project.title}-${index}`}
-                data-card
-                className="group relative w-[96%] shrink-0 snap-start overflow-hidden rounded-[1.5rem] border border-neutral-200 bg-neutral-100 shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition duration-500 sm:w-[78%] md:w-[70%] md:snap-center lg:w-[52%] md:rounded-[2rem] hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.14)]"
+                className="group relative overflow-hidden rounded-[1.5rem] border border-neutral-200 bg-neutral-100 shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
               >
-                <div className="relative h-[300px] w-full overflow-hidden bg-neutral-200 sm:h-[320px] md:h-[340px] lg:h-[380px]">
+                <div className="relative h-[300px] w-full overflow-hidden bg-neutral-100">
                   <Image
                     src={project.image}
                     alt={project.title}
                     width={1400}
                     height={1000}
                     priority={index === 0}
-                    className="h-full w-full object-contain object-center transition duration-700 group-hover:scale-105 md:object-cover"
+                    className="h-full w-full object-contain object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                 </div>
 
-                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 md:p-7">
-                  <p className="mb-1 text-xs font-medium tracking-wide text-orange-300 sm:mb-2 sm:text-sm md:text-base">
+                <div className="absolute inset-x-0 bottom-0 p-4">
+                  <p className="mb-1 text-xs font-medium tracking-wide text-orange-300">
                     {project.category}
                   </p>
 
-                  <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl md:text-3xl">
+                  <h3 className="text-xl font-semibold tracking-tight text-white">
+                    {project.title}
+                  </h3>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div
+            ref={sliderRef}
+            className="hidden snap-x snap-mandatory gap-6 overflow-x-auto px-2 pb-3 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:flex"
+          >
+            {projects.map((project, index) => (
+              <article
+                key={`${project.title}-${index}`}
+                data-card
+                className="group relative w-[70%] shrink-0 snap-center overflow-hidden rounded-[2rem] border border-neutral-200 bg-neutral-100 shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition duration-500 lg:w-[52%] hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.14)]"
+              >
+                <div className="relative h-[340px] w-full overflow-hidden bg-neutral-200 lg:h-[380px]">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    width={1400}
+                    height={1000}
+                    priority={index === 0}
+                    className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 p-7">
+                  <p className="mb-2 text-sm font-medium tracking-wide text-orange-300 md:text-base">
+                    {project.category}
+                  </p>
+
+                  <h3 className="text-2xl font-semibold tracking-tight text-white md:text-3xl">
                     {project.title}
                   </h3>
                 </div>
