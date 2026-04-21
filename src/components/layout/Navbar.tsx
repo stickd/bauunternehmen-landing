@@ -134,7 +134,7 @@ export function Navbar() {
           <a
             href="#kontakt"
             onClick={(e) => handleNavClick(e, "#kontakt")}
-            className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:shadow-md"
+            className="inline-flex items-center rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold !text-white [&_*]:!text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:!text-white hover:shadow-md"
           >
             Angebot anfragen
           </a>
@@ -171,7 +171,7 @@ export function Navbar() {
         {isOpen && (
           <>
             <motion.div
-              className="fixed left-0 right-0 bottom-0 top-16 z-40 bg-black/20 md:hidden"
+              className="fixed bottom-0 left-0 right-0 top-16 z-40 bg-black/20 md:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -225,7 +225,7 @@ export function Navbar() {
                   <a
                     href="#kontakt"
                     onClick={(e) => handleNavClick(e, "#kontakt")}
-                    className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-black"
+                    className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-neutral-900 px-5 py-3 text-sm font-semibold !text-white [&_*]:!text-white shadow-sm transition-all duration-300 hover:bg-black hover:!text-white"
                   >
                     Angebot anfragen
                   </a>

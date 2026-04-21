@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <section id="hero" className="scroll-mt-16 md:scroll-mt-20">
       <div className="mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl flex-col justify-center px-6 md:px-10">
-        <div className="flex flex-col items-start gap-6">
+        <div className="flex max-w-4xl flex-col items-start gap-6">
           <span className="text-sm font-medium uppercase tracking-[0.2em] text-neutral-500">
             Bauunternehmen
           </span>
@@ -32,7 +32,7 @@ export default function Hero() {
                   desktopOffset: 65,
                 });
               }}
-              className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+              className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold !text-white [&_*]:!text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-black hover:shadow-md"
             >
               Kostenloses Angebot anfordern
             </a>
@@ -44,7 +44,7 @@ export default function Hero() {
                 e.preventDefault();
                 scrollToSection("projekte");
               }}
-              className="rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition hover:bg-neutral-100"
+              className="inline-flex items-center justify-center rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-semibold text-neutral-900 transition-all duration-200 hover:-translate-y-0.5 hover:bg-neutral-100"
             >
               Unsere Projekte ansehen
             </a>
