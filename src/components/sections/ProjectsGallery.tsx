@@ -60,7 +60,6 @@ export default function ProjectsGallery() {
       className="scroll-mt-28 bg-white py-16 md:scroll-mt-36 md:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        {/* Header */}
         <div className="mx-auto mb-8 max-w-2xl text-center md:mb-16">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-orange-600 sm:text-sm">
             Unsere Projekte
@@ -76,11 +75,9 @@ export default function ProjectsGallery() {
         </div>
 
         <div className="relative">
-          {/* Fade edges (desktop only) */}
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-16 bg-gradient-to-r from-white to-transparent md:block" />
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-16 bg-gradient-to-l from-white to-transparent md:block" />
 
-          {/* Arrows (desktop only) */}
           <button
             type="button"
             onClick={() => scroll("left")}
@@ -99,7 +96,6 @@ export default function ProjectsGallery() {
             <ChevronRight className="h-7 w-7" />
           </button>
 
-          {/* Slider */}
           <div
             ref={sliderRef}
             className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-3 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden sm:gap-5 md:gap-6"
@@ -108,22 +104,20 @@ export default function ProjectsGallery() {
               <article
                 key={`${project.title}-${index}`}
                 data-card
-                className="group relative w-[92%] shrink-0 snap-start overflow-hidden rounded-[1.5rem] border border-neutral-200 bg-neutral-100 shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition duration-500 sm:w-[72%] md:w-[70%] md:snap-center lg:w-[52%] md:rounded-[2rem] hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.14)]"
+                className="group relative w-[96%] shrink-0 snap-start overflow-hidden rounded-[1.5rem] border border-neutral-200 bg-neutral-100 shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition duration-500 sm:w-[78%] md:w-[70%] md:snap-center lg:w-[52%] md:rounded-[2rem] hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.14)]"
               >
-                {/* Image */}
-                <div className="relative h-[250px] w-full overflow-hidden sm:h-[280px] md:h-[320px] lg:h-[380px]">
+                <div className="relative h-[300px] w-full overflow-hidden bg-neutral-200 sm:h-[320px] md:h-[340px] lg:h-[380px]">
                   <Image
                     src={project.image}
                     alt={project.title}
                     width={1400}
                     height={1000}
                     priority={index === 0}
-                    className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-105"
+                    className="h-full w-full object-contain object-center transition duration-700 group-hover:scale-105 md:object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                 </div>
 
-                {/* Text */}
                 <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 md:p-7">
                   <p className="mb-1 text-xs font-medium tracking-wide text-orange-300 sm:mb-2 sm:text-sm md:text-base">
                     {project.category}
