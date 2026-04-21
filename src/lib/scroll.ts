@@ -11,26 +11,20 @@ export function scrollToSection(
 
   const isMobile = window.innerWidth < 768;
 
-  // 🔥 дефолты (редактируй тут)
   const DEFAULT_OFFSETS = {
     mobile: 32,
-    desktop: -10,
+    desktop: 10,
   };
 
   let offset = 0;
 
-  // 1. если передали общий offset
   if (options?.offset !== undefined) {
     offset = options.offset;
-  }
-  // 2. если передали раздельные
-  else if (isMobile && options?.mobileOffset !== undefined) {
+  } else if (isMobile && options?.mobileOffset !== undefined) {
     offset = options.mobileOffset;
   } else if (!isMobile && options?.desktopOffset !== undefined) {
     offset = options.desktopOffset;
-  }
-  // 3. иначе берем дефолт
-  else {
+  } else {
     offset = isMobile ? DEFAULT_OFFSETS.mobile : DEFAULT_OFFSETS.desktop;
   }
 
