@@ -96,30 +96,30 @@ export default function ProjectsGallery() {
             <ChevronRight className="h-7 w-7" />
           </button>
 
+          {/* Mobile */}
           <div className="grid gap-5 md:hidden">
             {projects.map((project, index) => (
               <article
                 key={`${project.title}-${index}`}
-                className="group relative overflow-hidden rounded-[1.5rem] border border-neutral-200 bg-neutral-100 shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
+                className="overflow-hidden rounded-[1.5rem] border border-neutral-200 bg-white shadow-[0_8px_24px_rgba(0,0,0,0.08)]"
               >
-                <div className="relative h-[300px] w-full overflow-hidden bg-neutral-100">
+                <div className="bg-neutral-100">
                   <Image
                     src={project.image}
                     alt={project.title}
                     width={1400}
                     height={1000}
                     priority={index === 0}
-                    className="h-full w-full object-contain object-center"
+                    className="h-auto w-full object-contain"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                 </div>
 
-                <div className="absolute inset-x-0 bottom-0 p-4">
-                  <p className="mb-1 text-xs font-medium tracking-wide text-orange-300">
+                <div className="px-4 pb-5 pt-4">
+                  <p className="mb-1 text-xs font-medium tracking-wide text-orange-600">
                     {project.category}
                   </p>
 
-                  <h3 className="text-xl font-semibold tracking-tight text-white">
+                  <h3 className="text-xl font-semibold tracking-tight text-neutral-900">
                     {project.title}
                   </h3>
                 </div>
@@ -127,6 +127,7 @@ export default function ProjectsGallery() {
             ))}
           </div>
 
+          {/* Desktop / Tablet */}
           <div
             ref={sliderRef}
             className="hidden snap-x snap-mandatory gap-6 overflow-x-auto px-2 pb-3 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:flex"
