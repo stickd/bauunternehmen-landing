@@ -15,9 +15,12 @@ export default function Hero() {
           einem klaren Fokus auf Qualität.
         </p>
 
-        <button className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90">
+        <a
+          href="#contact"
+          className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+        >
           Kostenloses Angebot anfordern
-        </button>
+        </a>
       </div>
     </section>
   );
