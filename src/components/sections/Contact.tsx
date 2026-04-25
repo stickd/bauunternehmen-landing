@@ -1,6 +1,9 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useState } from "react";
+import { Container } from "@/components/ui/Container";
+import { Section } from "@/components/ui/Section";
+import { SectionBackground } from "@/components/ui/SectionBackground";
 
 type FormData = {
   name: string;
@@ -13,6 +16,87 @@ type FormErrors = {
   email?: string;
   message?: string;
 };
+
+type ContactCardProps = {
+  title: string;
+  children: React.ReactNode;
+};
+
+type TextFieldProps = {
+  id: keyof FormData;
+  label: string;
+  type?: string;
+  value: string;
+  error?: string;
+  placeholder: string;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  textarea?: boolean;
+};
+
+function ContactCard({ title, children }: ContactCardProps) {
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.06]">
+      <h3 className="text-xl font-semibold text-slate-100">{title}</h3>
+      {children}
+    </div>
+  );
+}
+
+function TextField({
+  id,
+  label,
+  type = "text",
+  value,
+  error,
+  placeholder,
+  onChange,
+  textarea = false,
+}: TextFieldProps) {
+  const errorId = `${id}-error`;
+
+  return (
+    <div>
+      <label
+        htmlFor={id}
+        className="mb-2 block text-sm font-medium text-slate-200"
+      >
+        {label}
+      </label>
+
+      {textarea ? (
+        <textarea
+          id={id}
+          name={id}
+          value={value}
+          onChange={onChange}
+          rows={6}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? errorId : undefined}
+          className="w-full resize-none rounded-2xl border border-white/10 bg-[#0F172A]/70 px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-orange-400/60 focus:bg-[#0F172A] focus:ring-2 focus:ring-orange-400/10"
+          placeholder={placeholder}
+        />
+      ) : (
+        <input
+          id={id}
+          name={id}
+          type={type}
+          value={value}
+          onChange={onChange}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? errorId : undefined}
+          className="w-full rounded-2xl border border-white/10 bg-[#0F172A]/70 px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-orange-400/60 focus:bg-[#0F172A] focus:ring-2 focus:ring-orange-400/10"
+          placeholder={placeholder}
+        />
+      )}
+
+      {error && (
+        <p id={errorId} className="mt-2 text-sm text-red-400">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
 
 export default function Contact() {
   const [formData, setFormData] = useState<FormData>({
@@ -76,9 +160,7 @@ export default function Contact() {
     setSuccessMessage("");
     setErrorMessage("");
 
-    if (Object.keys(validationErrors).length > 0) {
-      return;
-    }
+    if (Object.keys(validationErrors).length > 0) return;
 
     try {
       setIsSubmitting(true);
@@ -116,16 +198,10 @@ export default function Contact() {
   };
 
   return (
-    <section
-      id="kontakt"
-      className="relative scroll-mt-32 overflow-hidden bg-[#0B1220] py-20 md:scroll-mt-36 md:py-28"
-    >
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,#0B1220_0%,#0F172A_55%,#111827_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.05]" />
-      <div className="absolute -left-16 top-16 h-[240px] w-[240px] rounded-full bg-blue-500/10 blur-3xl" />
-      <div className="absolute bottom-12 right-0 h-[260px] w-[260px] rounded-full bg-orange-500/10 blur-3xl" />
+    <Section id="kontakt" className="scroll-mt-32 md:scroll-mt-36">
+      <SectionBackground />
 
-      <div className="relative mx-auto max-w-6xl px-6">
+      <Container className="relative">
         <div className="mb-16 max-w-2xl">
           <p className="mb-4 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">
             <span className="h-px w-8 bg-orange-400/70" />
@@ -146,11 +222,7 @@ export default function Contact() {
 
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
           <div className="space-y-6">
-            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.06]">
-              <h3 className="text-xl font-semibold text-slate-100">
-                Kontaktinformationen
-              </h3>
-
+            <ContactCard title="Kontaktinformationen">
               <div className="mt-6 space-y-4 text-sm leading-7 text-slate-300">
                 <p>
                   <span className="font-semibold text-slate-100">Telefon:</span>{" "}
@@ -165,19 +237,15 @@ export default function Contact() {
                   Musterstraße 12, 12345 Musterstadt
                 </p>
               </div>
-            </div>
+            </ContactCard>
 
-            <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.06]">
-              <h3 className="text-xl font-semibold text-slate-100">
-                Persönliche Beratung
-              </h3>
-
+            <ContactCard title="Persönliche Beratung">
               <p className="mt-3 text-sm leading-7 text-slate-300">
                 Ob Neubau, Sanierung oder Innenausbau – wir beraten Sie
                 individuell und finden gemeinsam die passende Lösung für Ihr
                 Projekt.
               </p>
-            </div>
+            </ContactCard>
           </div>
 
           <form
@@ -186,88 +254,34 @@ export default function Contact() {
             className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.05] md:p-8"
           >
             <div className="space-y-5">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-sm font-medium text-slate-200"
-                >
-                  Name
-                </label>
+              <TextField
+                id="name"
+                label="Name"
+                value={formData.name}
+                error={errors.name}
+                placeholder="Ihr Name"
+                onChange={handleChange}
+              />
 
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={handleChange}
-                  aria-invalid={Boolean(errors.name)}
-                  aria-describedby={errors.name ? "name-error" : undefined}
-                  className="w-full rounded-2xl border border-white/10 bg-[#0F172A]/70 px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-orange-400/60 focus:bg-[#0F172A] focus:ring-2 focus:ring-orange-400/10"
-                  placeholder="Ihr Name"
-                />
+              <TextField
+                id="email"
+                label="E-Mail"
+                type="email"
+                value={formData.email}
+                error={errors.email}
+                placeholder="ihre@email.de"
+                onChange={handleChange}
+              />
 
-                {errors.name && (
-                  <p id="name-error" className="mt-2 text-sm text-red-400">
-                    {errors.name}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-2 block text-sm font-medium text-slate-200"
-                >
-                  E-Mail
-                </label>
-
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  aria-invalid={Boolean(errors.email)}
-                  aria-describedby={errors.email ? "email-error" : undefined}
-                  className="w-full rounded-2xl border border-white/10 bg-[#0F172A]/70 px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-orange-400/60 focus:bg-[#0F172A] focus:ring-2 focus:ring-orange-400/10"
-                  placeholder="ihre@email.de"
-                />
-
-                {errors.email && (
-                  <p id="email-error" className="mt-2 text-sm text-red-400">
-                    {errors.email}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className="mb-2 block text-sm font-medium text-slate-200"
-                >
-                  Nachricht
-                </label>
-
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={6}
-                  aria-invalid={Boolean(errors.message)}
-                  aria-describedby={
-                    errors.message ? "message-error" : undefined
-                  }
-                  className="w-full resize-none rounded-2xl border border-white/10 bg-[#0F172A]/70 px-4 py-3 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-orange-400/60 focus:bg-[#0F172A] focus:ring-2 focus:ring-orange-400/10"
-                  placeholder="Ihre Nachricht"
-                />
-
-                {errors.message && (
-                  <p id="message-error" className="mt-2 text-sm text-red-400">
-                    {errors.message}
-                  </p>
-                )}
-              </div>
+              <TextField
+                id="message"
+                label="Nachricht"
+                value={formData.message}
+                error={errors.message}
+                placeholder="Ihre Nachricht"
+                onChange={handleChange}
+                textarea
+              />
 
               <div className="flex flex-col items-start gap-3 pt-2">
                 <button
@@ -298,7 +312,7 @@ export default function Contact() {
             </div>
           </form>
         </div>
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }

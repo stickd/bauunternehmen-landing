@@ -3,6 +3,8 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { scrollToSection, scrollToTop } from "@/lib/scroll";
+import { Container } from "@/components/ui/Container";
+import { ScrollButton } from "@/components/ui/ScrollButton";
 
 const navLinks = [
   { href: "#leistungen", label: "Leistungen" },
@@ -15,6 +17,14 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
+  const scrollAfterMenuClose = (callback: () => void) => {
+    setIsOpen(false);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(callback);
+    });
+  };
+
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
@@ -24,32 +34,22 @@ export function Navbar() {
     const id = href.replace("#", "");
 
     if (isOpen) {
-      setIsOpen(false);
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          scrollToSection(id);
-        });
-      });
-    } else {
-      scrollToSection(id);
+      scrollAfterMenuClose(() => scrollToSection(id));
+      return;
     }
+
+    scrollToSection(id);
   };
 
   const handleTopClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
     if (isOpen) {
-      setIsOpen(false);
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          scrollToTop();
-        });
-      });
-    } else {
-      scrollToTop();
+      scrollAfterMenuClose(scrollToTop);
+      return;
     }
+
+    scrollToTop();
   };
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0B1220]/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <Container className="flex h-16 items-center justify-between px-6">
         <a
           href="#top"
           onClick={handleTopClick}
@@ -131,18 +131,12 @@ export function Navbar() {
         </nav>
 
         <div className="hidden md:block">
-          <a
+          <ScrollButton
             href="#kontakt"
-            onClick={(e) => handleNavClick(e, "#kontakt")}
-            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full border border-orange-300/20 bg-gradient-to-b from-[#FB923C] to-[#EA580C] px-5 py-2.5 text-sm font-semibold !text-white shadow-[0_10px_30px_rgba(249,115,22,0.22)] transition-all duration-300 ease-out hover:-translate-y-[1px] hover:shadow-[0_20px_45px_rgba(249,115,22,0.35)] active:translate-y-[1px] active:scale-[0.985]"
+            className="px-5 py-2.5 hover:-translate-y-[1px] active:translate-y-[1px]"
           >
-            <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.2)_45%,transparent_70%)] translate-x-[-120%] transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
-            <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-80" />
-            <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
-            <span className="relative z-10 !text-white tracking-[0.02em]">
-              Angebot anfragen
-            </span>
-          </a>
+            Angebot anfragen
+          </ScrollButton>
         </div>
 
         <button
@@ -170,7 +164,7 @@ export function Navbar() {
             />
           </span>
         </button>
-      </div>
+      </Container>
 
       <AnimatePresence>
         {isOpen && (
@@ -191,56 +185,49 @@ export function Navbar() {
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
-              <nav className="mx-auto flex max-w-6xl flex-col px-6 py-5">
-                {navLinks.map((link, index) => {
-                  const isActive = activeSection === link.href;
+              <Container>
+                <nav className="flex flex-col py-5">
+                  {navLinks.map((link, index) => {
+                    const isActive = activeSection === link.href;
 
-                  return (
-                    <motion.div
-                      key={link.href}
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <a
-                        href={link.href}
-                        onClick={(e) => handleNavClick(e, link.href)}
-                        className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-medium transition-all duration-300 ${
-                          isActive
-                            ? "border-white/10 bg-white/[0.05] text-slate-200"
-                            : "border-transparent text-slate-300 hover:border-white/10 hover:bg-white/[0.05] hover:text-slate-200"
-                        }`}
+                    return (
+                      <motion.div
+                        key={link.href}
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ delay: index * 0.05 }}
                       >
-                        {link.label}
-                        {isActive && (
-                          <span className="h-2 w-2 rounded-full bg-orange-400" />
-                        )}
-                      </a>
-                    </motion.div>
-                  );
-                })}
+                        <a
+                          href={link.href}
+                          onClick={(e) => handleNavClick(e, link.href)}
+                          className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-sm font-medium transition-all duration-300 ${
+                            isActive
+                              ? "border-white/10 bg-white/[0.05] text-slate-200"
+                              : "border-transparent text-slate-300 hover:border-white/10 hover:bg-white/[0.05] hover:text-slate-200"
+                          }`}
+                        >
+                          {link.label}
+                          {isActive && (
+                            <span className="h-2 w-2 rounded-full bg-orange-400" />
+                          )}
+                        </a>
+                      </motion.div>
+                    );
+                  })}
 
-                <motion.div
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <a
-                    href="#kontakt"
-                    onClick={(e) => handleNavClick(e, "#kontakt")}
-                    className="group relative mt-4 inline-flex w-full items-center justify-center overflow-hidden rounded-full border border-orange-300/20 bg-gradient-to-b from-[#FB923C] to-[#EA580C] px-5 py-3 text-sm font-semibold !text-white shadow-[0_10px_30px_rgba(249,115,22,0.22)] transition-all duration-300 ease-out hover:-translate-y-[1px] hover:shadow-[0_20px_45px_rgba(249,115,22,0.35)] active:translate-y-[1px] active:scale-[0.985]"
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ delay: 0.2 }}
                   >
-                    <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.2)_45%,transparent_70%)] translate-x-[-120%] transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
-                    <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-80" />
-                    <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
-                    <span className="relative z-10 !text-white tracking-[0.02em]">
+                    <ScrollButton href="#kontakt" className="mt-4 w-full py-3">
                       Angebot anfragen
-                    </span>
-                  </a>
-                </motion.div>
-              </nav>
+                    </ScrollButton>
+                  </motion.div>
+                </nav>
+              </Container>
             </motion.div>
           </>
         )}

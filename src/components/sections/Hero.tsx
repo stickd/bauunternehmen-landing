@@ -1,6 +1,7 @@
 "use client";
 
-import { scrollToSection } from "@/lib/scroll";
+import { Container } from "@/components/ui/Container";
+import { ScrollButton } from "@/components/ui/ScrollButton";
 
 export default function Hero() {
   return (
@@ -8,14 +9,11 @@ export default function Hero() {
       id="hero"
       className="relative overflow-hidden bg-[#0F172A] text-white scroll-mt-16 md:scroll-mt-20"
     >
-      {/* BACKGROUND GRADIENT */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0F172A] via-[#10203A] to-[#0A1426]" />
 
-      {/* SOFT GLOW */}
       <div className="absolute -top-32 right-[-120px] h-[320px] w-[320px] rounded-full bg-[#F59E0B]/10 blur-3xl" />
       <div className="absolute left-[-100px] top-1/3 h-[220px] w-[220px] rounded-full bg-[#2563EB]/8 blur-3xl" />
 
-      {/* RIGHT DECORATIVE VISUAL */}
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] lg:block">
         <div className="absolute inset-y-0 right-0 w-full opacity-[0.07]">
           <div className="h-full w-full bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:72px_72px]" />
@@ -34,19 +32,15 @@ export default function Hero() {
         <div className="absolute bottom-[20%] right-[18%] h-[180px] w-[180px] rounded-full bg-[#F97316]/10 blur-3xl" />
       </div>
 
-      {/* OVERLAY */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(2,6,23,0.92),rgba(2,6,23,0.72),rgba(2,6,23,0.28))]" />
 
-      {/* CONTENT */}
-      <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-start px-4 sm:px-6 md:px-10 pt-16 sm:pt-20 md:pt-28">
+      <Container className="relative flex min-h-screen flex-col justify-start pt-16 sm:pt-20 md:pt-28">
         <div className="flex max-w-4xl flex-col items-start gap-6 md:gap-8">
-          {/* LABEL */}
           <span className="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">
             <span className="h-px w-8 bg-orange-400/70" />
             Bauunternehmen
           </span>
 
-          {/* TITLE */}
           <h1 className="max-w-[720px] text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl md:text-6xl">
             <span className="text-slate-300">
               Ihr zuverlässiger Partner für{" "}
@@ -54,48 +48,23 @@ export default function Hero() {
             <span className="text-orange-400">hochwertige Bauprojekte</span>
           </h1>
 
-          {/* TEXT */}
-          <p className="max-w-2xl text-base leading-7 text-slate-300 sm:text-base md:text-lg md:leading-8">
+          <p className="max-w-2xl text-base leading-7 text-slate-300 md:text-lg md:leading-8">
             Wir realisieren Bauprojekte mit höchster Präzision, moderner Technik
             und einem klaren Fokus auf Qualität, Zuverlässigkeit und
             Termintreue.
           </p>
 
-          {/* BUTTONS */}
           <div className="flex flex-wrap gap-4 pt-2">
-            {/* PRIMARY */}
-            <a
-              href="#kontakt"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("kontakt", {
-                  mobileOffset: 24,
-                  desktopOffset: 65,
-                });
-              }}
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full border border-orange-300/20 bg-gradient-to-b from-[#FB923C] to-[#EA580C] px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(249,115,22,0.22)] transition-[box-shadow,transform] duration-300 ease-out hover:shadow-[0_16px_36px_rgba(249,115,22,0.28)] active:scale-[0.985]"
-            >
-              <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,transparent_20%,rgba(255,255,255,0.16)_45%,transparent_70%)] translate-x-[-120%] transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
-              <span className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
-              <span className="relative z-10">
-                Kostenloses Angebot anfordern
-              </span>
-            </a>
+            <ScrollButton href="#kontakt" mobileOffset={24} desktopOffset={65}>
+              Kostenloses Angebot anfordern
+            </ScrollButton>
 
-            {/* SECONDARY */}
-            <a
-              href="#projekte"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("projekte");
-              }}
-              className="group inline-flex items-center justify-center rounded-full border border-white/15 bg-white/[0.06] px-6 py-3 text-sm font-semibold text-slate-100 backdrop-blur-md transition-all duration-300 hover:border-white/25 hover:bg-white/[0.1] hover:shadow-[0_10px_30px_rgba(2,6,23,0.35)] active:scale-[0.985]"
-            >
-              <span>Unsere Projekte ansehen</span>
-            </a>
+            <ScrollButton href="#projekte" variant="secondary">
+              Unsere Projekte ansehen
+            </ScrollButton>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
