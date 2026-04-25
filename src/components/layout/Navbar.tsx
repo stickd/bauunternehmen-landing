@@ -2,9 +2,13 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { scrollToSection, scrollToTop } from "@/lib/scroll";
 import { Container } from "@/components/ui/Container";
 import { ScrollButton } from "@/components/ui/ScrollButton";
+import {
+  navigateToHome,
+  navigateToSection,
+  handleHashScroll,
+} from "@/lib/scroll";
 
 const navLinks = [
   { href: "#leistungen", label: "Leistungen" },
@@ -34,26 +38,35 @@ export function Navbar() {
     const id = href.replace("#", "");
 
     if (isOpen) {
-      scrollAfterMenuClose(() => scrollToSection(id));
+      scrollAfterMenuClose(() => navigateToSection(id));
       return;
     }
 
-    scrollToSection(id);
+    navigateToSection(id);
   };
 
   const handleTopClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
     if (isOpen) {
-      scrollAfterMenuClose(scrollToTop);
+      scrollAfterMenuClose(navigateToHome);
       return;
     }
 
-    scrollToTop();
+    navigateToHome();
   };
 
   useEffect(() => {
+    handleHashScroll();
+  }, []);
+
+  useEffect(() => {
     const handleScrollSpy = () => {
+      if (window.location.pathname !== "/") {
+        setActiveSection("");
+        return;
+      }
+
       const activationLine = window.innerWidth < 768 ? 110 : 140;
       let currentSection = "";
 

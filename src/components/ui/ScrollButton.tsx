@@ -1,6 +1,6 @@
 "use client";
 
-import { scrollToSection } from "@/lib/scroll";
+import { navigateToSection, scrollToSection } from "@/lib/scroll";
 
 type ScrollButtonVariant = "primary" | "secondary";
 
@@ -33,13 +33,21 @@ export function ScrollButton({
 }: ScrollButtonProps) {
   const id = href.replace("#", "");
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    if (window.location.pathname !== "/") {
+      navigateToSection(id);
+      return;
+    }
+
+    scrollToSection(id, { mobileOffset, desktopOffset });
+  };
+
   return (
     <a
       href={href}
-      onClick={(e) => {
-        e.preventDefault();
-        scrollToSection(id, { mobileOffset, desktopOffset });
-      }}
+      onClick={handleClick}
       className={`${baseClasses} ${variantClasses[variant]} ${className}`}
     >
       {variant === "primary" && (

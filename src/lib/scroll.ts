@@ -28,9 +28,8 @@ export function scrollToSection(
     offset = isMobile ? DEFAULT_OFFSETS.mobile : DEFAULT_OFFSETS.desktop;
   }
 
-  // 🔥 СДВИГАЕМ СЕКЦИЮ НИЖЕ НА ДЕСКТОПЕ
   if (!isMobile && id === "projekte") {
-    offset -= 40; // можешь менять 80–140 под себя
+    offset -= 40;
   }
 
   const top = element.getBoundingClientRect().top + window.scrollY - offset;
@@ -50,4 +49,41 @@ export function scrollToTop() {
   });
 
   window.history.replaceState(null, "", "#top");
+}
+
+export function navigateToSection(id: string) {
+  if (typeof window === "undefined") return;
+
+  if (window.location.pathname !== "/") {
+    window.location.href = `/#${id}`;
+    return;
+  }
+
+  scrollToSection(id);
+}
+
+export function navigateToHome() {
+  if (typeof window === "undefined") return;
+
+  if (window.location.pathname !== "/") {
+    window.location.href = "/";
+    return;
+  }
+
+  scrollToTop();
+}
+export function handleHashScroll() {
+  if (typeof window === "undefined") return;
+
+  const hash = window.location.hash;
+  if (!hash) return;
+
+  const id = hash.replace("#", "");
+
+  // ждём пока DOM загрузится
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      scrollToSection(id);
+    });
+  });
 }
