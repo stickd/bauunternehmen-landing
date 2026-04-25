@@ -11,6 +11,7 @@ type Project = {
   title: string;
   category: string;
   image: string;
+  imageAlt: string;
 };
 
 type ProjectCardProps = {
@@ -31,26 +32,31 @@ const projects: Project[] = [
     title: "Projekt 01",
     category: "Neubau",
     image: "/Neubau.jpg",
+    imageAlt: "Modernes Neubauprojekt eines Bauunternehmens",
   },
   {
     title: "Projekt 02",
     category: "Sanierung",
     image: "/Sanierung.jpg",
+    imageAlt: "Sanierungsarbeiten an einem bestehenden Gebäude",
   },
   {
     title: "Projekt 03",
     category: "Innenausbau",
     image: "/Innenausbau.jpg",
+    imageAlt: "Innenausbau mit hochwertigen Materialien",
   },
   {
     title: "Projekt 04",
     category: "Fassade",
     image: "/Fassade.jpg",
+    imageAlt: "Fassadenarbeiten an einem modernen Gebäude",
   },
   {
     title: "Projekt 05",
     category: "Außenbereich",
     image: "/Ausenbereich.jpg",
+    imageAlt: "Gestalteter Außenbereich eines Bauprojekts",
   },
 ];
 
@@ -75,10 +81,15 @@ function ProjectCard({ project, index, variant }: ProjectCardProps) {
       >
         <Image
           src={project.image}
-          alt={project.title}
+          alt={project.imageAlt}
           width={1400}
           height={1000}
           priority={index === 0}
+          sizes={
+            isDesktop
+              ? "(min-width: 1024px) 45vw, (min-width: 768px) 60vw, 100vw"
+              : "100vw"
+          }
           className={
             isDesktop
               ? "h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -143,7 +154,7 @@ function SliderButton({
       aria-label={label}
       className={`absolute ${positionClass} top-1/2 z-20 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-white/20 hover:bg-white/[0.1] active:scale-95 md:flex`}
     >
-      <Icon className="h-7 w-7" />
+      <Icon className="h-7 w-7" aria-hidden="true" />
     </button>
   );
 }
