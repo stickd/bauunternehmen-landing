@@ -64,7 +64,7 @@ export default function About() {
       <div className="absolute -left-16 top-20 h-[240px] w-[240px] rounded-full bg-blue-500/10 blur-3xl" />
       <div className="absolute right-0 top-1/3 h-[280px] w-[280px] rounded-full bg-orange-500/10 blur-3xl" />
 
-      <div className="relative mx-auto w-full max-w-6xl px-6">
+      <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-6 pt-24 md:pt-0">
         <div className="grid w-full gap-12 lg:grid-cols-2 lg:items-center">
           {/* LEFT */}
           <motion.div
