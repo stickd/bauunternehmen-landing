@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const contactSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
@@ -12,6 +10,18 @@ const contactSchema = z.object({
 
 export async function POST(req: Request) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
+    const contactEmail = process.env.CONTACT_EMAIL;
+
+    if (!apiKey || !contactEmail) {
+      return NextResponse.json(
+        { error: "Email service is not configured" },
+        { status: 500 },
+      );
+    }
+
+    const resend = new Resend(apiKey);
+
     const body = await req.json();
     const result = contactSchema.safeParse(body);
 
@@ -23,7 +33,7 @@ export async function POST(req: Request) {
 
     await resend.emails.send({
       from: "Kontaktformular <onboarding@resend.dev>",
-      to: process.env.CONTACT_EMAIL!,
+      to: contactEmail,
       replyTo: email,
       subject: `Neue Kontaktanfrage von ${name}`,
       text: `
