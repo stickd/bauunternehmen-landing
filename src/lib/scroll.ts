@@ -28,6 +28,11 @@ export function scrollToSection(
     offset = isMobile ? DEFAULT_OFFSETS.mobile : DEFAULT_OFFSETS.desktop;
   }
 
+  if (isMobile && id === "ueber-uns") {
+    offset = -80;
+  }
+
+  // Desktop fix: Projects section position
   if (!isMobile && id === "projekte") {
     offset -= 40;
   }
@@ -72,6 +77,7 @@ export function navigateToHome() {
 
   scrollToTop();
 }
+
 export function handleHashScroll() {
   if (typeof window === "undefined") return;
 
@@ -80,7 +86,6 @@ export function handleHashScroll() {
 
   const id = hash.replace("#", "");
 
-  // ждём пока DOM загрузится
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       scrollToSection(id);
