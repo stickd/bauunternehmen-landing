@@ -41,7 +41,7 @@ export default function RootLayout({
     <html lang="de">
       <body className="min-h-screen bg-white text-neutral-900 antialiased">
         <Navbar />
-        <main>{children}</main>
+        {children}
         <Footer />
       </body>
     </html>
