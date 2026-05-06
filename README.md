@@ -8,7 +8,6 @@ The project focuses on **conversion**, **clean UI/UX**, and **performance**, and
 
 ## 🚀 Live Demo
 
-> _(add your link after deploy)_
 > `https://bauunternehmen-landing.vercel.app/`
 
 ---
